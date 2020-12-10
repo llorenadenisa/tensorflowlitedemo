@@ -4,10 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.AssetManager
 import android.graphics.Bitmap
 import org.tensorflow.lite.Interpreter
-import java.io.BufferedReader
-import java.io.FileInputStream
-import java.io.IOException
-import java.io.InputStreamReader
+import java.io.*
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.MappedByteBuffer
@@ -51,13 +48,14 @@ class TFLiteClassifier(private val inputSize: Int) : Classifier {
 
     override fun recognize(bitmap: Bitmap): List<Recognition> {
         // TODO 4: Step one is to convert the bitmap to a byte buffer.
+        val byteBuff = convertBitmapToByteBuffer(bitmap)
 
         val result = Array(1) { ByteArray(labelList.size) }
         // TODO 5: Step two will run the interpreter using the byte buffer as input and use the 'result' variable to return the output.
-
+        interpreter.run(byteBuff, result)
         // TODO 6: Last step is to return the result in a sorted order.
 
-        return emptyList()
+        return getSortedResult(result)
     }
 
     @Throws(IOException::class)

@@ -46,7 +46,8 @@ class CaptureActivity : AppCompatActivity() {
 
                 withContext(Dispatchers.Main) {
                     // TODO 3: Show the recognitions using the common Toast widget. Make use of joinToString method to concat multiple items.
-                    Toast.makeText(applicationContext, result.joinToString { result-> result.label }, Toast.LENGTH_LONG).show()
+                    val str = result.joinToString { result-> result.label }
+                    Toast.makeText(applicationContext, str , Toast.LENGTH_LONG).show()
 
                 }
 
